@@ -10,12 +10,26 @@ class TaskController extends Controller
     /**
      * Muestra la lista de tareas.
      */
-    public function index()
+    /*public function index()
     {
         // Trae todas las tareas de la base de datos
         $tasks = Task::all();
         //return response()->json($tasks); //json unicode
         return view('tareas.index', compact('tasks')); // Esto es para mostrar las tareas en una vista blade (que crearemos después)
+    }*/
+
+    public function index(Request $request)
+    {
+        $tasks = Task::all();
+
+        // Si la URL es /tasks y pides JSON (desde React)
+        if ($request->wantsJson()) {
+            return response()->json($tasks);
+        }
+
+        // Si entras normal por el navegador
+        // Si quieres usar REACT, deja 'react'. Si quieres usar BLADE, deja 'tareas.index'
+        return view('react'); 
     }
 
     public function store(Request $request)
